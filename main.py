@@ -1,5 +1,9 @@
 import json
 
+from classes.App import App
+from classes.Book import Book
+from classes.Movie import Movie
+from classes.Song import Song
 
 def main():
     with open("files/1.json") as f:
@@ -9,14 +13,13 @@ def main():
     for i in range(0, len(data)):
         type = data[i]['type']
         if type == 'song':
-            from classes.Song import Song
             Song(data[i]['data']).print()
         elif type == "app":
-            print(2)
+            App(data[i]['data']).print()
         elif type == "movie":
-            print(3)
+            Movie(data[i]['data']).print()
         elif type == "book":
-            print(4)
+            Book(data[i]['data']).print()
 
         print(type)
 
