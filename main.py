@@ -21,6 +21,7 @@ def read_file(file):
             Movie(data[i]['data']).print()
         elif type == "book":
             Book(data[i]['data']).print()
+            
 
 
 def download_file(url, name):
