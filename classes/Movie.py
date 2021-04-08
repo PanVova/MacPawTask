@@ -1,9 +1,18 @@
-class Movie(object):
-    is_adult = False
-    original_title = ""
-    release_date = ""
-    original_language = ""
-    budget = 0
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, Boolean, Float
+
+Base = declarative_base()
+
+
+class Movie(Base, object):
+    __tablename__ = 'Movie'
+
+    id = Column(Integer, primary_key=True)
+    is_adult = Column(Boolean)
+    original_title = Column(String)
+    release_date = Column(String)
+    original_language = Column(String)
+    budget = Column(Integer)
 
     def __init__(self, o):
         self.is_adult = o["is_adult"]
@@ -18,6 +27,3 @@ class Movie(object):
         print(self.release_date)
         print(self.original_language)
         print(self.budget)
-
-
-

@@ -1,8 +1,17 @@
-class Book(object):
-    original_title = ""
-    average_rating = 0.0
-    authors = ""
-    language_code = ""
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, Boolean, Float
+
+Base = declarative_base()
+
+
+class Book(Base, object):
+    __tablename__ = 'Book'
+
+    id = Column(Integer, primary_key=True)
+    original_title = Column(String)
+    average_rating = Column(Float)
+    authors = Column(String)
+    language_code = Column(String)
 
     def __init__(self, o):
         self.original_title = o["original_title"]
@@ -15,5 +24,3 @@ class Book(object):
         print(self.average_rating)
         print(self.authors)
         print(self.language_code)
-
-

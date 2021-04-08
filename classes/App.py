@@ -1,9 +1,18 @@
-class App(object):
-    name = ""
-    version = ""
-    size_bytes = 0
-    genre = ""
-    rating = 0.0
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, Boolean, Float
+
+Base = declarative_base()
+
+
+class App(Base, object):
+    __tablename__ = 'App'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    version = Column(String)
+    size_bytes = Column(Integer)
+    genre = Column(String)
+    rating = Column(Float)
 
     def __init__(self, o):
         self.name = o["name"]
@@ -18,6 +27,3 @@ class App(object):
         print(self.size_bytes)
         print(self.genre)
         print(self.rating)
-
-
-
