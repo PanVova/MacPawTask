@@ -15,8 +15,8 @@ import requests
 async def requesting(url):
     try:
         async with aiohttp.ClientSession() as session:
-            result = await session.get("https://data-engineering-interns.macpaw.io/" +url, allow_redirects=True)
-            text = await open('files/' + url, 'wb').write(result.content)
+            result = await session.get("https://data-engineering-interns.macpaw.io/" + url, allow_redirects=True)
+            text = await open('files/' + url, 'wb').write(await result.read())
             return text
     except Exception:
         return f"error! No data returned from {url}"
@@ -49,13 +49,13 @@ def read_files_list():  # add async
 
 
 def main():
-    start = time.time()
-    download_file('https://data-engineering-interns.macpaw.io/files_list.data', name="files_list.data")
-    for i in read_files_list():
-        print(i)
-        download_file("https://data-engineering-interns.macpaw.io/" + i, name=i)
-        read_file(i)
-    print(f"Sync result: {time.time() - start}")
+    # start = time.time()
+    # download_file('https://data-engineering-interns.macpaw.io/files_list.data', name="files_list.data")
+    # for i in read_files_list():
+    #     print(i)
+    #     download_file("https://data-engineering-interns.macpaw.io/" + i, name=i)
+    #     read_file(i)
+    # print(f"Sync result: {time.time() - start}")
 
     start = time.time()
     download_file('https://data-engineering-interns.macpaw.io/files_list.data', name="files_list.data")
@@ -64,6 +64,10 @@ def main():
     loop = asyncio.get_event_loop()
     loop.run_until_complete(asyncio.gather(*coros))
     loop.close()
+
+    for i in url_list:
+        print(i)
+        read_file(i)
     print(f"Async result: {time.time() - start}")
 
 
