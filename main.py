@@ -1,5 +1,10 @@
 import json
 
+import aiohttp
+import asyncio
+
+import time
+
 from classes.App import App
 from classes.Book import Book
 from classes.Movie import Movie
@@ -7,26 +12,35 @@ from classes.Song import Song
 import requests
 
 
+async def requesting(url):
+    try:
+        async with aiohttp.ClientSession() as session:
+            result = await session.get("https://data-engineering-interns.macpaw.io/" +url, allow_redirects=True)
+            text = await open('files/' + url, 'wb').write(result.content)
+            return text
+    except Exception:
+        return f"error! No data returned from {url}"
+
+
 def read_file(file):
-    with open("files/"+file) as f:
+    with open("files/" + file) as f:
         data = json.loads(f.read())
 
     for i in range(0, len(data)):
         type = data[i]['type']
         if type == 'song':
-            Song(data[i]['data']).print()
+            Song(data[i]['data'])
         elif type == "app":
-            App(data[i]['data']).print()
+            App(data[i]['data'])
         elif type == "movie":
-            Movie(data[i]['data']).print()
+            Movie(data[i]['data'])
         elif type == "book":
-            Book(data[i]['data']).print()
-            
+            Book(data[i]['data'])
 
 
 def download_file(url, name):
-    r = requests.get(url, allow_redirects=True)
-    open('files/' + name, 'wb').write(r.content)
+    result = requests.get(url, allow_redirects=True)
+    open('files/' + name, 'wb').write(result.content)
 
 
 def read_files_list():  # add async
@@ -35,15 +49,23 @@ def read_files_list():  # add async
 
 
 def main():
+    start = time.time()
     download_file('https://data-engineering-interns.macpaw.io/files_list.data', name="files_list.data")
     for i in read_files_list():
         print(i)
         download_file("https://data-engineering-interns.macpaw.io/" + i, name=i)
         read_file(i)
+    print(f"Sync result: {time.time() - start}")
+
+    start = time.time()
+    download_file('https://data-engineering-interns.macpaw.io/files_list.data', name="files_list.data")
+    url_list = read_files_list()
+    coros = [requesting(url) for url in url_list]
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(asyncio.gather(*coros))
+    loop.close()
+    print(f"Async result: {time.time() - start}")
 
 
 if __name__ == '__main__':
     main()
-
-
-    # и сделать сам прогон программы - чтение json файликов
