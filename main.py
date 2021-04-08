@@ -1,8 +1,12 @@
+import json
 
 
 def main():
+    with open('files/1.data') as f:
+        data = json.load(f)
 
-    print("hello")
+    # Output: {'name': 'Bob', 'languages': ['English', 'Fench']}
+    print(data)
 
 
 if __name__ == '__main__':
