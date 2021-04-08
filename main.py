@@ -49,13 +49,6 @@ def read_files_list():  # add async
 
 
 def main():
-    # start = time.time()
-    # download_file('https://data-engineering-interns.macpaw.io/files_list.data', name="files_list.data")
-    # for i in read_files_list():
-    #     print(i)
-    #     download_file("https://data-engineering-interns.macpaw.io/" + i, name=i)
-    #     read_file(i)
-    # print(f"Sync result: {time.time() - start}")
 
     start = time.time()
     download_file('https://data-engineering-interns.macpaw.io/files_list.data', name="files_list.data")
@@ -66,7 +59,7 @@ def main():
     loop.close()
 
     for i in url_list:
-        print(i)
+        #print(i)
         read_file(i)
     print(f"Async result: {time.time() - start}")
 
