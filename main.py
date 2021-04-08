@@ -2,11 +2,23 @@ import json
 
 
 def main():
-    with open('files/1.data') as f:
-        data = json.load(f)
+    with open("files/1.json") as f:
+        data = json.loads(f.read())
+        print(len(data))
 
-    # Output: {'name': 'Bob', 'languages': ['English', 'Fench']}
-    print(data)
+    for i in range(0, len(data)):
+        type = data[i]['type']
+        if type == 'song':
+            from classes.Song import Song
+            Song(data[i]['data']).print()
+        elif type == "app":
+            print(2)
+        elif type == "movie":
+            print(3)
+        elif type == "book":
+            print(4)
+
+        print(type)
 
 
 if __name__ == '__main__':
