@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 
-class Song(Base, object):
+class Song(Base):
     __tablename__ = 'songs'
 
     id = Column(Integer, primary_key=True)

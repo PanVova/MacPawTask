@@ -102,8 +102,7 @@ def main():
     print("DOWNLOADED ALL")
 
     for i in read_files_list():
-        pass
-        # print(i)
+        print(i)
         read_file(i)
     print("END")
     print(f"Async result: {time.time() - start}")

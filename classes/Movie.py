@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 
-class Movie(Base, object):
+class Movie(Base):
     __tablename__ = 'movies'
 
     id = Column(Integer, primary_key=True)
@@ -21,7 +21,7 @@ class Movie(Base, object):
         self.release_date = o["release_date"]
         self.original_language = o["original_language"]
         self.budget = o["budget"]
-        self.original_title_normalized = self.original_title
+        self.original_title_normalized = self.original_title.replace(" " ,"_").replace(":" ,"_").replace("-" ,"_").replace("___","_").replace("__","_").lower()
 
     def print(self):
         print(self.is_adult)
