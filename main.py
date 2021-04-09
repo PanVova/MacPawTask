@@ -1,12 +1,10 @@
 import asyncio
 import json
 import time
-
 import aiohttp
 import requests
 import sqlalchemy as sa
 from sqlalchemy.orm import sessionmaker
-
 from classes.App import App
 from classes.Movie import Movie
 from classes.Song import Song
@@ -21,7 +19,7 @@ sa.Table("apps", metadata,
          sa.Column("size_bytes", sa.VARCHAR, nullable=False, unique=False),
          sa.Column("genre", sa.VARCHAR, nullable=False, unique=False),
          sa.Column("rating", sa.Float, nullable=False, unique=False),
-         sa.Column("is_awesome",sa.Boolean,nullable=False,unique=False))
+         sa.Column("is_awesome", sa.Boolean, nullable=False, unique=False))
 
 sa.Table("movies", metadata,
          sa.Column("id", sa.Integer, primary_key=True),
@@ -84,7 +82,7 @@ def download_file(url, name):
     open('files/' + name, 'wb').write(result.content)
 
 
-def read_files_list():  # add async
+def read_files_list():
     with open("files/files_list.data") as file:
         return file.read().split("\n")
 
@@ -110,7 +108,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-# read one more time how to work with acquired data
-# refactor
