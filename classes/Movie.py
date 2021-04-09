@@ -1,18 +1,19 @@
+from sqlalchemy import Column, Integer, Boolean, VARCHAR
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Boolean, Float
 
 Base = declarative_base()
 
 
 class Movie(Base, object):
-    __tablename__ = 'Movie'
+    __tablename__ = 'movies'
 
     id = Column(Integer, primary_key=True)
     is_adult = Column(Boolean)
-    original_title = Column(String)
-    release_date = Column(String)
-    original_language = Column(String)
+    original_title = Column(VARCHAR)
+    release_date = Column(VARCHAR)
+    original_language = Column(VARCHAR)
     budget = Column(Integer)
+    original_title_normalized = Column(VARCHAR)
 
     def __init__(self, o):
         self.is_adult = o["is_adult"]
@@ -20,6 +21,7 @@ class Movie(Base, object):
         self.release_date = o["release_date"]
         self.original_language = o["original_language"]
         self.budget = o["budget"]
+        self.original_title_normalized = self.original_title
 
     def print(self):
         print(self.is_adult)

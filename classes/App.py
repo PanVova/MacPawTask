@@ -1,18 +1,19 @@
+from sqlalchemy import Column, Integer, Float, VARCHAR, Boolean
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Boolean, Float
 
 Base = declarative_base()
 
 
 class App(Base, object):
-    __tablename__ = 'App'
+    __tablename__ = 'apps'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String)
-    version = Column(String)
+    name = Column(VARCHAR)
+    version = Column(VARCHAR)
     size_bytes = Column(Integer)
-    genre = Column(String)
+    genre = Column(VARCHAR)
     rating = Column(Float)
+    is_awesome = Column(Boolean)
 
     def __init__(self, o):
         self.name = o["name"]
@@ -20,6 +21,7 @@ class App(Base, object):
         self.size_bytes = o["size_bytes"]
         self.genre = o["genre"]
         self.rating = o["rating"]
+        self.is_awesome = self.rating > 4.0 and True or False
 
     def print(self):
         print(self.name)
@@ -27,3 +29,4 @@ class App(Base, object):
         print(self.size_bytes)
         print(self.genre)
         print(self.rating)
+        print(self.is_awesome)
